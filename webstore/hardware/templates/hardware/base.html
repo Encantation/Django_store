@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link type='text/css' href="{% static 'hardware/css/styles.css' %}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+{% block mainmenu %}
+    <div class="header">
+        <ul id="mainmenu" class="mainmenu">
+          {% for item in menu %}
+            {% if not forloop.last %}
+                <li><a href="{% url item.url_name %}"> {{item.title}}</a></li>
+            {% else %}
+                <li class="last"><a href="{% url item.url_name %}"> {{item.title}}</a></li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+    </div>
+{% endblock mainmenu %}
+
+{% block content %}
+{% endblock %}
+</body>
+</html>
