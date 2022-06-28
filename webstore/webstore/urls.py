@@ -21,7 +21,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('hardware/', include('hardware.urls')),
+    path('', include('hardware.urls')),
 ]
 
 if settings.DEBUG:

@@ -2,14 +2,10 @@
 
 {% block content %}
 <ul>
-  {% for g in goods %}
+  {% for c in cats %}
   <li>
-    <h2><a href="{{ g.get_absolute_url }}" >{{g.title}}</a></h2>
-    {% if g.photo %}
-      <p><img class="img-article-left thumb" src="{{g.photo.url}}"></p>
-    {% endif %}
-    <p>Цена: {{g.price}} руб.</p>
-    <p>Описание: {{g.description}}</p>
+    <h2><a href="{{ c.get_absolute_url }}" >{{c.name}}</a></h2>
+
     <div class="clear"></div>
   </li>
   {% endfor %}

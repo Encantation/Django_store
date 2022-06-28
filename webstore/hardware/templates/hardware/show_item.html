@@ -2,12 +2,12 @@
 
 {% block content %}
   <li>
-    <h2>{{g.title}}</h2>
-    {% if g.photo %}
-      <p><img class="img-article-left thumb" src="{{g.photo.url}}"></p>
+    <h2>{{item.title}}</h2>
+    {% if item.photo %}
+      <p><img class="img-article-left thumb" src="{{item.photo.url}}"></p>
     {% endif %}
-    <p>Цена: {{g.price}} руб.</p>
-    <p>Описание: {{g.description}}</p>
+    <p>Цена: {{item.price}} руб.</p>
+    <p>Описание: {{item.description}}</p>
     <div class="clear"></div>
   </li>
 {% endblock %}
