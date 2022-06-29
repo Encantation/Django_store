@@ -10,7 +10,8 @@ urlpatterns = [
     path('item/<slug:item_slug>', ShowItem.as_view(), name='item'),
     path('cart/', cart, name='cart'),
     path('about/', about, name='about'),
-    path('log_in/', log_in, name='log_in'),
-
+    path('login/', LoginUser.as_view(), name='login'),
+    path('logout/', logout_user, name='logout'),
+    path('register/', RegisterUser.as_view(), name='register'),
 ]
 
