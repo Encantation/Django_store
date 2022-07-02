@@ -1,6 +1,7 @@
 from .models import *
 
-menu = [{'title': 'Каталог', 'url_name': 'catalog'},
+menu = [{'title': 'Магазин', 'url_name': 'index'},
+{'title': 'Каталог', 'url_name': 'catalog'},
 {'title': 'Корзина', 'url_name': 'cart'},
 {'title': 'О сайте', 'url_name': 'about'},
 ]

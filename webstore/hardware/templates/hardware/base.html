@@ -7,6 +7,7 @@
     <title>{{ title }}</title>
 </head>
 <body>
+<!--  Главное меню -->
 {% block mainmenu %}
   <div class="header">
     <ul id="mainmenu" class="mainmenu">
@@ -22,7 +23,25 @@
   </div>
 {% endblock mainmenu %}
 
-{% block content %}
-{% endblock %}
+<table class="table-content" border=0 cellpadding="0" cellspacing="0">
+<tr>
+<!-- Sidebar слева -->
+	<td valign="top" class="left-chapters">
+	<ul id="leftchapters">
+      {% for c in cats %}
+      <li>
+        <h2><a href="{{ c.get_absolute_url }}" >{{c.name}}</a></h2>
+
+        <div class="clear"></div>
+      </li>
+      {% endfor %}
+	</ul>
+    </td>
+<!-- Конец Sidebar'а -->
+<td valign="top" class="content">
+    {% block content %}
+    {% endblock %}
+</td>
+</table>
 </body>
 </html>
