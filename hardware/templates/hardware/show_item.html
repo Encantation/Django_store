@@ -1,0 +1,13 @@
+{% extends 'hardware/base.html' %}
+
+{% block content %}
+  <li>
+    <h2>{{item.title}}</h2>
+    {% if item.photo %}
+      <p><img class="img-article-left thumb" src="{{item.photo.url}}"></p>
+    {% endif %}
+    <p>Цена: {{item.price}} руб.</p>
+    <p>Описание: {{item.description}}</p>
+    <div class="clear"></div>
+  </li>
+{% endblock %}

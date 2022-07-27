@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link type='text/css' href="{% static 'hardware/css/styles.css' %}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+<!--  Главное меню -->
+{% block mainmenu %}
+  <div class="header">
+    <ul id="mainmenu" class="mainmenu">
+      {% for item in menu %}
+         <li><a href="{% url item.url_name %}"> {{item.title}}</a></li>
+      {% endfor %}
+      {% if request.user.is_authenticated %}
+        <li class="last">{{user.username}} | <a href="{% url 'logout' %}">Выйти</a></li>
+      {% else %}
+        <li class="last"><a href="{% url 'register' %}">Регистрация</a> | <a href="{% url 'login' %}">Вход</a></li>
+      {% endif %}
+    </ul>
+  </div>
+{% endblock mainmenu %}
+
+<table class="table-content" border=0 cellpadding="0" cellspacing="0">
+<tr>
+<!-- Sidebar слева -->
+	<td valign="top" class="left-chapters">
+	<ul id="leftchapters">
+      {% for c in cats %}
+      <li>
+        <h2><a href="{{ c.get_absolute_url }}" >{{c.name}}</a></h2>
+
+        <div class="clear"></div>
+      </li>
+      {% endfor %}
+	</ul>
+    </td>
+<!-- Конец Sidebar'а -->
+<td valign="top" class="content">
+    {% block content %}
+    {% endblock %}
+</td>
+</table>
+</body>
+</html>
