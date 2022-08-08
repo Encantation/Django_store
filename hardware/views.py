@@ -3,15 +3,18 @@ from django.contrib.auth.views import LoginView
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
+
+from .permissions import *
 from .utils import *
 from .forms import *
 from rest_framework import generics
 from .serializers import GoodsSerializer
 
 class ShopIndex(DataMixin, ListView):
+    '''Index page of the store'''
+
     model = Goods
     template_name = 'hardware/index.html'
     context_object_name = 'goods'
@@ -23,6 +26,8 @@ class ShopIndex(DataMixin, ListView):
 
 
 class CategoryView(DataMixin, ListView):
+    '''Shows store catalog with all categories available'''
+
     model = Category
     template_name = 'hardware/catalog.html'
     context_object_name = 'cats'
@@ -37,6 +42,8 @@ class CategoryView(DataMixin, ListView):
 
 
 class ShowCategory(DataMixin, ListView):
+    '''Shows all items that belong to selected category'''
+
     model = Goods
     template_name = 'hardware/show_category.html'
     slug_url_kwarg = 'cat_slug'
@@ -52,6 +59,8 @@ class ShowCategory(DataMixin, ListView):
 
 
 class ShowItem(DataMixin, DetailView):
+    '''Detailed view for specific item'''
+
     model = Goods
     template_name = 'hardware/show_item.html'
     slug_url_kwarg = 'item_slug'
@@ -64,6 +73,8 @@ class ShowItem(DataMixin, DetailView):
 
 
 class RegisterUser(DataMixin, CreateView):
+    '''New user registration form'''
+
     form_class = RegisterUserForm
     template_name = 'hardware/register.html'
     success_url = reverse_lazy('login')
@@ -79,6 +90,8 @@ class RegisterUser(DataMixin, CreateView):
         return redirect('index')
 
 class LoginUser(DataMixin, LoginView):
+    '''User login form'''
+
     form_class = LoginUserForm
     template_name = 'hardware/login.html'
 
@@ -101,21 +114,24 @@ def cart(request):
 def about(request):
     return render(request, 'hardware/about.html', {'menu': menu, 'title': 'About'})
 
-class GoodsAPIView(APIView):
-    def get(self, request):
-        queryset = Goods.objects.all()
-        return Response({'goods': GoodsSerializer(queryset, many=True ).data})
-
-    def post(self, request):
-        serializer = GoodsSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
 
 
-        goods_new = Goods.objects.create(
-            title=request.data['title'],
-            price=request.data['price'],
-            quantity=request.data['quantity'],
-            description=request.data['description'],
-            category_id=request.data['category_id']
-        )
-        return Response({'post': GoodsSerializer(goods_new).data})
+class GoodsAPIList(generics.ListCreateAPIView):
+    '''API list for view purposes'''
+    queryset = Goods.objects.all()
+    serializer_class = GoodsSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+
+
+class GoodsAPIUpdate(generics.RetrieveUpdateAPIView):
+    '''API class for database entries update'''
+    queryset = Goods.objects.all()
+    serializer_class = GoodsSerializer
+    permission_classes = (IsAuthenticated, )
+
+
+class GoodsAPIDestroy(generics.RetrieveDestroyAPIView):
+    '''API class for databse entry deletion'''
+    queryset = Goods.objects.all()
+    serializer_class = GoodsSerializer
+    permission_classes = (IsAdminOrReadOnly, )

@@ -16,14 +16,19 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
-from hardware.views import GoodsAPIView
+from django.urls import path, include, re_path
+from hardware.views import *
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('hardware.urls')),
-    path('api/v1/goods/', GoodsAPIView.as_view()),
+    path('api/v1/drf-auth/', include('rest_framework.urls')), #session authentication
+    path('api/v1/auth/', include('djoser.urls')),
+    #re_path(r'^auth/', include('djoser.urls.authtoken')),
+    path('api/v1/goods/', GoodsAPIList.as_view()), #API view all goods
+    path('api/v1/goods/<int:pk>/', GoodsAPIUpdate.as_view()), #API view for specific item
+    path('api/v1/goodsdelete/<int:pk>/', GoodsAPIDestroy.as_view()), #API delete specific item
 ]
 
 if settings.DEBUG:

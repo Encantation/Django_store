@@ -3,6 +3,8 @@ from .models import *
 
 
 class GoodsAdmin(admin.ModelAdmin):
+    '''Settings for admin panel Goods model'''
+
     list_display = ('id', 'title', 'photo', 'price', 'quantity', 'description', 'category')
     list_display_links = ('id', 'title')
     search_fields = ('title', )
@@ -11,6 +13,8 @@ class GoodsAdmin(admin.ModelAdmin):
 
 
 class CategoryAdmin(admin.ModelAdmin):
+    '''Settings for admin panel Category model'''
+
     list_display = ('id', 'name')
     list_display_links = ('id', 'name')
     search_fields = ('name',)
