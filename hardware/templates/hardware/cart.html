@@ -1,0 +1,19 @@
+{% extends 'hardware/base.html' %}
+
+{% block content %}
+<ul>
+  {% for g in items %}
+  <li>
+    <p>Покупатель: {{request.user}}</p>
+    <h2><a href="" >{{g.title}}</a></h2>
+    {% if g.photo %}
+      <p><img class="img-article-left thumb" src="{{g.photo.url}}"></p>
+    {% endif %}
+    <p>Цена: {{g.price}} руб.</p>
+    <p>Описание: {{g.description}}</p>
+    <p>Количество: {{g.quantity}}</p>
+    <div class="clear"></div>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

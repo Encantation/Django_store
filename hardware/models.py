@@ -33,3 +33,14 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         return reverse('category', kwargs={'cat_slug': self.slug})
+
+class ShoppingCart(models.Model):
+    '''Shopping cart for particular user'''
+
+    item = models.ForeignKey('Goods', on_delete=models.PROTECT)
+    user = models.ForeignKey(User, verbose_name="User", on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+
+
+    def get_absolute_url(self):
+        return reverse('cart', kwargs={'cart_slug': self.slug})

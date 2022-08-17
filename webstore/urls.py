@@ -25,7 +25,6 @@ urlpatterns = [
     path('', include('hardware.urls')),
     path('api/v1/drf-auth/', include('rest_framework.urls')), #session authentication
     path('api/v1/auth/', include('djoser.urls')),
-    #re_path(r'^auth/', include('djoser.urls.authtoken')),
     path('api/v1/goods/', GoodsAPIList.as_view()), #API view all goods
     path('api/v1/goods/<int:pk>/', GoodsAPIUpdate.as_view()), #API view for specific item
     path('api/v1/goodsdelete/<int:pk>/', GoodsAPIDestroy.as_view()), #API delete specific item

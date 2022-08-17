@@ -21,5 +21,14 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
 
 
+class CartAdmin(admin.ModelAdmin):
+    '''Settings for admin panel Category model'''
+
+    list_display = ('user', 'item', 'quantity')
+    list_display_links = ('user', 'item', 'quantity')
+    search_fields = ('user',)
+
+
 admin.site.register(Goods, GoodsAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(ShoppingCart, CartAdmin)

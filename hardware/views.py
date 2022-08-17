@@ -71,6 +71,21 @@ class ShowItem(DataMixin, DetailView):
         c_def = self.get_user_context(title=context['item'])
         return dict(list(context.items()) + list(c_def.items()))
 
+class ShopingCart(DataMixin, ListView):
+    '''Index page of the store'''
+
+    model = ShoppingCart
+    template_name = 'hardware/cart.html'
+    context_object_name = 'items'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Корзина")
+        return dict(list(context.items()) + list(c_def.items()))
+
+    def get_queryset(self):
+        query = ShoppingCart.objects.filter(user_id=self.request.user.id)
+        return [Goods.objects.get(id=q.item_id) for q in query]
 
 class RegisterUser(DataMixin, CreateView):
     '''New user registration form'''
@@ -107,9 +122,6 @@ def logout_user(request):
     logout(request)
     return redirect('login')
 
-
-def cart(request):
-    return render(request, 'hardware/catalog.html', {'menu': menu, 'title': 'Catalog'})
 
 def about(request):
     return render(request, 'hardware/about.html', {'menu': menu, 'title': 'About'})
